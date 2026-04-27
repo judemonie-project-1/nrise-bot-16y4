@@ -1,4 +1,4 @@
-// build:1777291795094
+// build:1777291868022
 'use strict';
 var Telegraf=require('telegraf').Telegraf;
 var express=require('express');
@@ -14,7 +14,7 @@ function nextGroqKey(){if(!_groqPool.length)return'';var k=_groqPool[_groqIdx%_g
 var WEBHOOK_URL=(process.env.WEBHOOK_URL||'').trim();
 var PORT=process.env.PORT||3000;
 var TICKER='$NRISE';
-var CA='';
+var CA='0x13668f535efa4b09410b7224c07962446a5098c2';
 var TWITTER='https://x.com/nasarise_bsc';
 var TG='https://t.me/nasarise';
 var WEBSITE='';
@@ -116,8 +116,8 @@ bot.command('shoutout',async function(ctx){var admin=await isAdmin(ctx,ctx.from.
 bot.command('ca',async function(ctx){if(!caUnlocked)return ctx.reply(NOT_LIVE[Math.floor(Math.random()*NOT_LIVE.length)]);await sendWithTracker(caMsg,ctx.chat.id,'$NRISE Contract Address',{});return ctx.reply('<code>'+CA+'</code>',{parse_mode:'HTML'});});
 bot.command('x',async function(ctx){return sendWithTracker(xMsg,ctx.chat.id,'Follow $NRISE on X',{reply_markup:{inline_keyboard:[[{text:'Follow on X',url:TWITTER}]]}});});
 bot.command('twitter',async function(ctx){return sendWithTracker(xMsg,ctx.chat.id,'Follow $NRISE on X',{reply_markup:{inline_keyboard:[[{text:'Follow on X',url:TWITTER}]]}});});
-bot.command('socials',function(ctx){return ctx.reply('<a href=\'https://dexscreener.com/bsc/\'>Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=\'>PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':'')+(WEBSITE?' | <a href=\''+WEBSITE+'\'>Website</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});});
-bot.command('links',function(ctx){return ctx.reply('<a href=\'https://dexscreener.com/bsc/\'>Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=\'>PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':'')+(WEBSITE?' | <a href=\''+WEBSITE+'\'>Website</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});});
+bot.command('socials',function(ctx){return ctx.reply('<a href=\'https://dexscreener.com/bsc/0x13668f535efa4b09410b7224c07962446a5098c2\'>Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=0x13668f535efa4b09410b7224c07962446a5098c2\'>PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':'')+(WEBSITE?' | <a href=\''+WEBSITE+'\'>Website</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});});
+bot.command('links',function(ctx){return ctx.reply('<a href=\'https://dexscreener.com/bsc/0x13668f535efa4b09410b7224c07962446a5098c2\'>Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=0x13668f535efa4b09410b7224c07962446a5098c2\'>PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':'')+(WEBSITE?' | <a href=\''+WEBSITE+'\'>Website</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});});
 bot.command('info',function(ctx){return ctx.reply('<b>$NRISE</b> \u2014 BNB Smart Chain (BSC)\n\nSupply: N/A\nTax: ?% buy / ?% sell\nContract: NOT RENOUNCED\nLP: NOT LOCKED'+(TWITTER?'\nTwitter: '+TWITTER:''),{parse_mode:'HTML',disable_web_page_preview:true});});
 bot.command('shill',async function(ctx){
   var shillMsgs=[
@@ -176,7 +176,7 @@ bot.on('message',async function(ctx){
       await sendWithTracker(caMsg,ctx.chat.id,'$NRISE Contract Address',{});return ctx.reply('<code>'+CA+'</code>',{parse_mode:'HTML'});
     }
     if(lower==='x'||lower==='twitter')return sendWithTracker(xMsg,ctx.chat.id,'Follow $NRISE on X',{reply_markup:{inline_keyboard:[[{text:'Follow on X',url:TWITTER}]]}});
-    if(lower==='socials'||lower==='links')return ctx.reply('<a href=\'https://dexscreener.com/bsc/\'> Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=\'> PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});
+    if(lower==='socials'||lower==='links')return ctx.reply('<a href=\'https://dexscreener.com/bsc/0x13668f535efa4b09410b7224c07962446a5098c2\'> Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=0x13668f535efa4b09410b7224c07962446a5098c2\'> PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});
     return;
   }
   if(!text)return;
@@ -192,7 +192,7 @@ bot.on('message',async function(ctx){
     await sendWithTracker(caMsg,ctx.chat.id,'$NRISE Contract Address',{});return ctx.reply('<code>'+CA+'</code>',{parse_mode:'HTML'});
   }
   if(lower2==='x'||lower2==='twitter'||lower2.includes('follow on'))return sendWithTracker(xMsg,ctx.chat.id,'Follow $NRISE on X',{reply_markup:{inline_keyboard:[[{text:'Follow on X',url:TWITTER}]]}});
-  if(lower2==='socials'||lower2==='links')return ctx.reply('<a href=\'https://dexscreener.com/bsc/\'> Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=\'> PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});
+  if(lower2==='socials'||lower2==='links')return ctx.reply('<a href=\'https://dexscreener.com/bsc/0x13668f535efa4b09410b7224c07962446a5098c2\'> Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=0x13668f535efa4b09410b7224c07962446a5098c2\'> PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});
   if(isPrivate){try{var gr=await smartAsk(chatHistory.join('\n'));if(gr&&gr!=='IGNORE')return ctx.reply(gr);}catch(_){}return;}
   if(RESPONSE_MODE==='focused'){if(text.indexOf('?')===-1)return;try{var gr2=await smartAsk(chatHistory.join('\n'));if(gr2&&gr2!=='IGNORE')return ctx.reply(gr2);}catch(_){}return;}
   var tkLow=TICKER.toLowerCase().replace('$','');
