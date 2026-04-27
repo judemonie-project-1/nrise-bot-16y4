@@ -1,4 +1,4 @@
-// build:1777271880009
+// build:1777272168124
 'use strict';
 var Telegraf=require('telegraf').Telegraf;
 var express=require('express');
@@ -15,7 +15,7 @@ var WEBHOOK_URL=(process.env.WEBHOOK_URL||'').trim();
 var PORT=process.env.PORT||3000;
 var TICKER='$NRISE';
 var CA='';
-var TWITTER='';
+var TWITTER='https://x.com/nasarise_bsc';
 var TG='';
 var WEBSITE='';
 var IS_CTO=false;
