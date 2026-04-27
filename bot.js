@@ -1,4 +1,4 @@
-// build:1777291733946
+// build:1777291795094
 'use strict';
 var Telegraf=require('telegraf').Telegraf;
 var express=require('express');
@@ -48,7 +48,7 @@ function hasFud(t){var l=t.toLowerCase();return FUD.some(function(w){return l.in
 var NOT_LIVE=['$NRISE hasn\u2019t launched yet. CA coming soon.','Not yet. Stay ready.','CA drops soon. Hold tight.'];
 var CTO_REPLIES=['$NRISE is a CTO. Original dev gone. Community owns and runs this completely. No dev to rug.','CTO project. Dev walked away. Community stepped up and owns $NRISE now. That is the strength.','No dev here. $NRISE is 100% community-owned. Original dev left. Community drives this forward.'];
 function sysPrompt(){
-  return 'You are the community bot for $NRISE, a BNB Smart Chain (BSC) meme token.\nToken: $NRISE | Chain: BNB Smart Chain (BSC)\nSupply: N/A\nTax: ?% buy / ?% sell\nContract: NOT RENOUNCED | LP: NOT LOCKED\nDEV: Active, building, present. Never imply dev left.'+(TWITTER?'\nTwitter: '+TWITTER:'')+'\nNarrative: '+""+'\nPersonality: Confident, sharp, crypto-native. Talk like a seasoned degen who believes in the project. Direct and bold.\nRULES: 2-4 lines max. Natural and professional. Never share TG group link. Never repeat reply. If hype/casual/no question: reply IGNORE exactly.';
+  return 'You are the community bot for $NRISE, a BNB Smart Chain (BSC) meme token.\nToken: $NRISE | Chain: BNB Smart Chain (BSC)\nSupply: N/A\nTax: ?% buy / ?% sell\nContract: NOT RENOUNCED | LP: NOT LOCKED\nDEV: Active, building, present. Never imply dev left.'+(TWITTER?'\nTwitter: '+TWITTER:'')+'\nNarrative: '+"NASARISE is built for movement.\nEvery holder is part of the crew.\nEvery move pushes the mission forward.\nWe don’t stand still.\nWe rise.\nFrom ground level to deep space.\nThe earlier you board,\nthe stronger your position when we take off.\nDestination: Mars 🚀\n$NRICE 🌌"+'\nPersonality: Confident, sharp, crypto-native. Talk like a seasoned degen who believes in the project. Direct and bold.\nRULES: 2-4 lines max. Natural and professional. Never share TG group link. Never repeat reply. If hype/casual/no question: reply IGNORE exactly.';
 }
 async function ask(msg){
   if(!_groqPool.length)throw new Error('No AI key configured. Add one with /addgroq in factory.');
