@@ -1,4 +1,4 @@
-// build:1777272572399
+// build:1777275454367
 'use strict';
 var Telegraf=require('telegraf').Telegraf;
 var express=require('express');
@@ -14,16 +14,16 @@ function nextGroqKey(){if(!_groqPool.length)return'';var k=_groqPool[_groqIdx%_g
 var WEBHOOK_URL=(process.env.WEBHOOK_URL||'').trim();
 var PORT=process.env.PORT||3000;
 var TICKER='$NRISE';
-var CA='0x13668f535efa4b09410b7224c07962446a5098c2';
-var TWITTER='https://x.com/nasarise_bsc';
-var TG='https://t.me/nasarise';
+var CA='';
+var TWITTER='';
+var TG='';
 var WEBSITE='';
 var IS_CTO=false;
 var RESPONSE_MODE='focused';
 var bot=new Telegraf(BOT_TOKEN);
 var app=express();app.use(express.json());
 var _SF='/tmp/state.json';
-var caUnlocked=false,groupChatId=null,silTimer=null;
+var caUnlocked=true,groupChatId=null,silTimer=null;
 var SIL_DELAY=3600000;
 function loadState(){try{var s=JSON.parse(fs.readFileSync(_SF,'utf8'));caUnlocked=!!s.u;groupChatId=s.g||null;}catch(_){}}
 function saveState(){try{fs.writeFileSync(_SF,JSON.stringify({u:caUnlocked,g:groupChatId}));}catch(_){}}
@@ -48,7 +48,7 @@ function hasFud(t){var l=t.toLowerCase();return FUD.some(function(w){return l.in
 var NOT_LIVE=['$NRISE hasn\u2019t launched yet. CA coming soon.','Not yet. Stay ready.','CA drops soon. Hold tight.'];
 var CTO_REPLIES=['$NRISE is a CTO. Original dev gone. Community owns and runs this completely. No dev to rug.','CTO project. Dev walked away. Community stepped up and owns $NRISE now. That is the strength.','No dev here. $NRISE is 100% community-owned. Original dev left. Community drives this forward.'];
 function sysPrompt(){
-  return 'You are the community bot for $NRISE, a BNB Smart Chain (BSC) meme token.\nToken: $NRISE | Chain: BNB Smart Chain (BSC)\nSupply: 1M | Max Wallet: 2%\nTax: 5% buy / 5% sell\nContract: NOT RENOUNCED | LP: NOT LOCKED\nDEV: Active, building, present. Never imply dev left.'+(TWITTER?'\nTwitter: '+TWITTER:'')+'\nNarrative: '+"NASARISE is built for movement.\nEvery holder is part of the crew.\nEvery move pushes the mission forward.\nWe don’t stand still.\nWe rise.\nFrom ground level to deep space.\nThe earlier you board,\nthe stronger your position when we take off.\nDestination: Mars 🚀\n$NRICE 🌌"+'\nPersonality: Confident, sharp, crypto-native. Talk like a seasoned degen who believes in the project. Direct and bold.\nRULES: 2-4 lines max. Natural and professional. Never share TG group link. Never repeat reply. If hype/casual/no question: reply IGNORE exactly.';
+  return 'You are the community bot for $NRISE, a BNB Smart Chain (BSC) meme token.\nToken: $NRISE | Chain: BNB Smart Chain (BSC)\nSupply: N/A\nTax: ?% buy / ?% sell\nContract: NOT RENOUNCED | LP: NOT LOCKED\nDEV: Active, building, present. Never imply dev left.'+(TWITTER?'\nTwitter: '+TWITTER:'')+'\nNarrative: '+""+'\nPersonality: Confident, sharp, crypto-native. Talk like a seasoned degen who believes in the project. Direct and bold.\nRULES: 2-4 lines max. Natural and professional. Never share TG group link. Never repeat reply. If hype/casual/no question: reply IGNORE exactly.';
 }
 async function ask(msg){
   if(!_groqPool.length)throw new Error('No AI key configured. Add one with /addgroq in factory.');
@@ -116,9 +116,9 @@ bot.command('shoutout',async function(ctx){var admin=await isAdmin(ctx,ctx.from.
 bot.command('ca',async function(ctx){if(!caUnlocked)return ctx.reply(NOT_LIVE[Math.floor(Math.random()*NOT_LIVE.length)]);await sendWithTracker(caMsg,ctx.chat.id,'$NRISE Contract Address',{});return ctx.reply('<code>'+CA+'</code>',{parse_mode:'HTML'});});
 bot.command('x',async function(ctx){return sendWithTracker(xMsg,ctx.chat.id,'Follow $NRISE on X',{reply_markup:{inline_keyboard:[[{text:'Follow on X',url:TWITTER}]]}});});
 bot.command('twitter',async function(ctx){return sendWithTracker(xMsg,ctx.chat.id,'Follow $NRISE on X',{reply_markup:{inline_keyboard:[[{text:'Follow on X',url:TWITTER}]]}});});
-bot.command('socials',function(ctx){return ctx.reply('<a href=\'https://dexscreener.com/bsc/0x13668f535efa4b09410b7224c07962446a5098c2\'>Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=0x13668f535efa4b09410b7224c07962446a5098c2\'>PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':'')+(WEBSITE?' | <a href=\''+WEBSITE+'\'>Website</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});});
-bot.command('links',function(ctx){return ctx.reply('<a href=\'https://dexscreener.com/bsc/0x13668f535efa4b09410b7224c07962446a5098c2\'>Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=0x13668f535efa4b09410b7224c07962446a5098c2\'>PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':'')+(WEBSITE?' | <a href=\''+WEBSITE+'\'>Website</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});});
-bot.command('info',function(ctx){return ctx.reply('<b>$NRISE</b> \u2014 BNB Smart Chain (BSC)\n\nSupply: 1M\nMax Wallet: 2%\nTax: 5% buy / 5% sell\nContract: NOT RENOUNCED\nLP: NOT LOCKED'+(TWITTER?'\nTwitter: '+TWITTER:''),{parse_mode:'HTML',disable_web_page_preview:true});});
+bot.command('socials',function(ctx){return ctx.reply('<a href=\'https://dexscreener.com/bsc/\'>Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=\'>PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':'')+(WEBSITE?' | <a href=\''+WEBSITE+'\'>Website</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});});
+bot.command('links',function(ctx){return ctx.reply('<a href=\'https://dexscreener.com/bsc/\'>Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=\'>PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':'')+(WEBSITE?' | <a href=\''+WEBSITE+'\'>Website</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});});
+bot.command('info',function(ctx){return ctx.reply('<b>$NRISE</b> \u2014 BNB Smart Chain (BSC)\n\nSupply: N/A\nTax: ?% buy / ?% sell\nContract: NOT RENOUNCED\nLP: NOT LOCKED'+(TWITTER?'\nTwitter: '+TWITTER:''),{parse_mode:'HTML',disable_web_page_preview:true});});
 bot.command('shill',async function(ctx){
   var shillMsgs=[
     'Have you heard about $NRISE?\n\n$NRISE \u2014 community-owned on BSC.\nRenounced. LP NOT LOCKED. No dev games.\nThis is the quiet move. Load up.',
@@ -176,7 +176,7 @@ bot.on('message',async function(ctx){
       await sendWithTracker(caMsg,ctx.chat.id,'$NRISE Contract Address',{});return ctx.reply('<code>'+CA+'</code>',{parse_mode:'HTML'});
     }
     if(lower==='x'||lower==='twitter')return sendWithTracker(xMsg,ctx.chat.id,'Follow $NRISE on X',{reply_markup:{inline_keyboard:[[{text:'Follow on X',url:TWITTER}]]}});
-    if(lower==='socials'||lower==='links')return ctx.reply('<a href=\'https://dexscreener.com/bsc/0x13668f535efa4b09410b7224c07962446a5098c2\'> Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=0x13668f535efa4b09410b7224c07962446a5098c2\'> PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});
+    if(lower==='socials'||lower==='links')return ctx.reply('<a href=\'https://dexscreener.com/bsc/\'> Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=\'> PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});
     return;
   }
   if(!text)return;
@@ -192,7 +192,7 @@ bot.on('message',async function(ctx){
     await sendWithTracker(caMsg,ctx.chat.id,'$NRISE Contract Address',{});return ctx.reply('<code>'+CA+'</code>',{parse_mode:'HTML'});
   }
   if(lower2==='x'||lower2==='twitter'||lower2.includes('follow on'))return sendWithTracker(xMsg,ctx.chat.id,'Follow $NRISE on X',{reply_markup:{inline_keyboard:[[{text:'Follow on X',url:TWITTER}]]}});
-  if(lower2==='socials'||lower2==='links')return ctx.reply('<a href=\'https://dexscreener.com/bsc/0x13668f535efa4b09410b7224c07962446a5098c2\'> Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=0x13668f535efa4b09410b7224c07962446a5098c2\'> PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});
+  if(lower2==='socials'||lower2==='links')return ctx.reply('<a href=\'https://dexscreener.com/bsc/\'> Chart</a> | <a href=\'https://pancakeswap.finance/swap?outputCurrency=\'> PancakeSwap</a>'+(TWITTER?' | <a href=\''+TWITTER+'\'>Twitter</a>':''),{parse_mode:'HTML',disable_web_page_preview:true});
   if(isPrivate){try{var gr=await smartAsk(chatHistory.join('\n'));if(gr&&gr!=='IGNORE')return ctx.reply(gr);}catch(_){}return;}
   if(RESPONSE_MODE==='focused'){if(text.indexOf('?')===-1)return;try{var gr2=await smartAsk(chatHistory.join('\n'));if(gr2&&gr2!=='IGNORE')return ctx.reply(gr2);}catch(_){}return;}
   var tkLow=TICKER.toLowerCase().replace('$','');
